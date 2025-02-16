@@ -21,7 +21,7 @@ def test_demoqa_form():
     browser.element('.react-datepicker__year-select').perform(command.js.click).all(
         'option'
     ).element_by(have.text('1996')).click()
-    browser.element('.react-datepicker__day--003').perform(command.js.click)
+    browser.all('.react-datepicker__day--003').element(0).perform(command.js.click)
     browser.element('#dateOfBirthInput').should(have.value("03 May 1996"))
 
     # Вводим предметы
