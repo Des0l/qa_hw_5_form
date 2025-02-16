@@ -10,7 +10,9 @@ def test_demoqa_form():
     browser.element('#firstName').should(be.blank).type('Ivan')
     browser.element('#lastName').should(be.blank).type('Ivanov')
     browser.element('#userEmail').should(be.blank).type('vanvan@mail.ru')
-    browser.element('[for="gender-radio-1"]').perform(command.js.click)
+    browser.element('//label[@for="gender-radio-1" and text()="Male"]').perform(
+        command.js.click
+    )
     browser.element('#userNumber').should(be.blank).type('89879879879')
 
     # Работа с календарем
@@ -22,7 +24,7 @@ def test_demoqa_form():
         'option'
     ).element_by(have.text('1996')).click()
     browser.all('.react-datepicker__day--003').element(0).perform(command.js.click)
-    browser.element('#dateOfBirthInput').should(have.value("03 May 1996"))
+    browser.element('#dateOfBirthInput').should(have.value("03 May 1996")) # Дополнительно проверяем, что выбралась нужная дата
 
     # Вводим предметы
     browser.element('#subjectsInput').type('Biology').press_enter().type(
@@ -30,8 +32,12 @@ def test_demoqa_form():
     ).press_enter().type('Chemistry').press_enter()
 
     # Проставляем чек-боксы хобби
-    browser.element('#hobbies-checkbox-1').perform(command.js.click)
-    browser.element('#hobbies-checkbox-3').perform(command.js.click)
+    browser.element('//label[@for="hobbies-checkbox-1" and text()="Sports"]').perform(
+        command.js.click
+    )
+    browser.element('//label[@for="hobbies-checkbox-3" and text()="Music"]').perform(
+        command.js.click
+    )
 
     # Вставляем файл
     browser.element('#uploadPicture').type(
