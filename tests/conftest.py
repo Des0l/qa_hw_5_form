@@ -1,5 +1,5 @@
 import pytest
-from selene import browser, have, be
+from selene import browser
 from selenium import webdriver
 
 
@@ -13,7 +13,7 @@ def browser_test_setup():
     # driver_options.add_argument('--headless')
     browser.config.driver_options = driver_options
     browser.open("https://demoqa.com/automation-practice-form")
-    # browser.driver.execute_script("$('#fixedban').remove()")
-    # browser.driver.execute_script("$('footer').remove()") - 2 строки отключают баннеры на странице
+    browser.driver.execute_script("$('#fixedban').remove()")
+    browser.driver.execute_script("$('footer').remove()")
     yield
     browser.quit()
