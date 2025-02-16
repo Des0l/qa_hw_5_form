@@ -41,8 +41,13 @@ def test_demoqa_form():
     # Работаем с адресом
     browser.element('#currentAddress').should(be.blank).type('Барселона, ул. Ленина 14')
 
-    browser.element('#react-select-3-input').type('Haryana').press_enter()
-    browser.element('#react-select-4-input').type('Panipat').press_enter()
+    browser.element('#state').click().all(
+        'div[id^="react-select-3-option"]'
+    ).element_by(have.text('Haryana')).perform(command.js.click)
+
+    browser.element('#city').click().all('div[id^="react-select-4-option"]').element_by(
+        have.text('Panipat')
+    ).perform(command.js.click)
 
     # Отправляем форму
     browser.element('#submit').perform(command.js.click)
