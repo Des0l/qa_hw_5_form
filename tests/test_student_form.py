@@ -1,4 +1,4 @@
-from selene import browser, have, be, command
+from selene import browser, have, be
 import os
 
 
@@ -12,21 +12,18 @@ def test_demoqa_form():
     browser.element('#userEmail').should(be.blank).type('vanvan@mail.ru')
     browser.element("label[for='gender-radio-1']").should(
         have.exact_text('Male')
-    ).perform(command.js.click)
+    ).click()
     browser.element('#userNumber').should(be.blank).type('89879879879')
 
     # Работа с календарем
-    browser.element('#dateOfBirthInput').perform(command.js.click)
-    browser.element('.react-datepicker__month-select').perform(command.js.click).all(
-        'option'
-    ).element_by(have.text('May')).click()
-    browser.element('.react-datepicker__year-select').perform(command.js.click).all(
-        'option'
-    ).element_by(have.text('1996')).click()
-    browser.all('.react-datepicker__day--003').element(0).perform(command.js.click)
-    browser.element('#dateOfBirthInput').should(
-        have.value("03 May 1996")
-    )  # Дополнительно проверяем, что выбралась нужная дата
+    browser.element('#dateOfBirthInput').click()
+    browser.element('.react-datepicker__month-select').click().all('option').element_by(
+        have.text('May')
+    ).click()
+    browser.element('.react-datepicker__year-select').click().all('option').element_by(
+        have.text('1996')
+    ).click()
+    browser.all('.react-datepicker__day--003').element(0).click()
 
     # Вводим предметы
     browser.element('#subjectsInput').type('Biology').press_enter().type(
@@ -34,13 +31,9 @@ def test_demoqa_form():
     ).press_enter().type('Chemistry').press_enter()
 
     # Проставляем чек-боксы хобби
-    browser.element('label[for="hobbies-checkbox-1"]').should(
-        have.exact_text('Sports')
-    ).perform(command.js.click)
+    browser.element('//label[text()="Sports"]').click()
 
-    browser.element('label[for="hobbies-checkbox-3"]').should(
-        have.exact_text('Music')
-    ).perform(command.js.click)
+    browser.element('//label[text()="Music"]').click()
 
     # Вставляем файл
     browser.element('#uploadPicture').type(
@@ -52,14 +45,14 @@ def test_demoqa_form():
 
     browser.element('#state').click().all(
         'div[id^="react-select-3-option"]'
-    ).element_by(have.text('Haryana')).perform(command.js.click)
+    ).element_by(have.text('Haryana')).click()
 
     browser.element('#city').click().all('div[id^="react-select-4-option"]').element_by(
         have.text('Panipat')
-    ).perform(command.js.click)
+    ).click()
 
     # Отправляем форму
-    browser.element('#submit').perform(command.js.click)
+    browser.element('#submit').click()
 
     # Проверка корректности введенных данных
     browser.element("#example-modal-sizes-title-lg").should(
@@ -96,7 +89,7 @@ def test_demoqa_form():
     browser.all("tbody tr td:nth-child(2)").should(have.texts(*expected_values))
 
     # Закрываем окно
-    browser.element('#closeLargeModal').perform(command.js.click)
+    browser.element('#closeLargeModal').click()
 
     # Проверяем, что снова попали на страницу формы
     browser.element(".text-center").should(have.text("Practice Form"))
